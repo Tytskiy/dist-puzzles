@@ -26,6 +26,17 @@ something is done, a non-obvious trade-off, or a subtle constraint.
 - `tests/` — pytest mirroring package layout; `tests/typing/` for static checks
 - `justfile` — run `just check` (ruff + mypy), `just test`, `just fix`
 
+## Puzzle authoring
+
+- If the user asks a question, answer it first and do not take action unless
+  they explicitly ask for an edit, command, or implementation.
+- Move at the user's pace. If the user asks for one puzzle, task, or edit, do
+  only that work and stop; do not proactively build future tiers material.
+- The user owns the teaching narrative, video flow, and storytelling. Do not add
+  broad explanations, lesson scripts, or narrative framing around puzzles.
+- Puzzle text may include a small neutral description when it helps identify the
+  task, expected output, or grading target, but keep it minimal and practical.
+
 ## Tooling
 
 - `uv` for dependency management

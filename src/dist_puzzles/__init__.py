@@ -1,5 +1,8 @@
-from dist_puzzles.grading import check_puzzle
+from dist_puzzles.p2p import irecv, isend, recv, send
 
 __all__ = [
-    "check_puzzle",
+    "irecv",
+    "isend",
+    "recv",
+    "send",
 ]
