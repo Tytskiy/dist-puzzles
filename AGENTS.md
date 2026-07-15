@@ -20,11 +20,14 @@ something is done, a non-obvious trade-off, or a subtle constraint.
 
 ## Project structure
 
-- `src/dist_puzzles/` — library source (shared helpers, not student solutions)
-- `src/dist_puzzles/grading/` — `check_puzzle` and related test helpers
-- `puzzles/` — tiered notebooks and exercise specs
-- `tests/` — pytest mirroring package layout; `tests/typing/` for static checks
-- `justfile` — run `just check` (ruff + mypy), `just test`, `just fix`
+- `puzzles/` — notebooks and exercise specs; this is the main project surface
+  for now.
+- `src/dist_puzzles/` — tiny shared notebook helpers: `check`, `check_comm`,
+  and `comm_report`.
+- `pyproject.toml` — dependency, package, and tool configuration.
+- `justfile` — run `just check`, `just test`, `just fix`.
+- Do not add `tests/` yet. Add pytest tests only when the user explicitly
+  decides the project needs them.
 
 ## Puzzle authoring
 
@@ -41,9 +44,8 @@ something is done, a non-obvious trade-off, or a subtle constraint.
 
 - `uv` for dependency management
 - `ruff` for linting and formatting
-- `mypy` for type checking (`src` + `tests/typing`, strict-ish)
-- `pytest` for tests
-- Run `just check && just test` after changes
+- There is no pytest surface in this repo for now.
+- Run `just check && just test` after changes.
 
 ## Relationship to flock
 
@@ -52,9 +54,9 @@ something is done, a non-obvious trade-off, or a subtle constraint.
   Do not reimplement them here.
 - **dist-puzzles is the course layer.** PyTorch tensors, tensor-specific
   collectives, mesh/placement abstractions, and puzzle grading.
-- Import flock for communication (`flock.isend`, `flock.all_gather`, …). Add
-  puzzle-specific code under `puzzles/` or new `src/dist_puzzles/` modules as
-  tiers need them.
+- Import flock for communication (`flock.isend`, `flock.all_gather`, …) and
+  `flock.torch` for tensor communication. Keep puzzle-specific code in
+  notebooks unless the user asks for shared modules.
 - Keep flock dependency-free: never add torch imports to flock from this repo.
 
 ## Design principles
