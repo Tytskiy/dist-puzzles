@@ -22,6 +22,8 @@ something is done, a non-obvious trade-off, or a subtle constraint.
 
 - `puzzles/` — notebooks and exercise specs; this is the main project surface
   for now.
+- `solutions/` — public reference notebooks, named to match their puzzle notebooks.
+  Keep implementations and checker calls here; avoid duplicating full exercise descriptions.
 - `src/dist_puzzles/` — tiny shared notebook helpers: `check`, `check_comm`,
   and `comm_report`.
 - `pyproject.toml` — dependency, package, and tool configuration.
@@ -35,10 +37,58 @@ something is done, a non-obvious trade-off, or a subtle constraint.
   they explicitly ask for an edit, command, or implementation.
 - Move at the user's pace. If the user asks for one puzzle, task, or edit, do
   only that work and stop; do not proactively build future tiers material.
-- The user owns the teaching narrative, video flow, and storytelling. Do not add
-  broad explanations, lesson scripts, or narrative framing around puzzles.
-- Puzzle text may include a small neutral description when it helps identify the
-  task, expected output, or grading target, but keep it minimal and practical.
+- Follow the user's teaching direction and scope. Write narrative for the requested
+  lesson or puzzle; leave video flow and broader course storytelling to the user.
+- Keep runnable examples explicit; do not hide launching workers behind a problem framework.
+- Use plain Python values and `flock` for P2P exercises. Introduce tensors only where
+  tensor computation is the subject.
+- Students should only need to import checkers from lesson modules; avoid public
+  enums, constants, or wrappers for ordinary values. Keep supplied local logic simple.
+- Check results and essential communication properties across varied inputs and schedules.
+  Accept different valid protocols, message formats, and operation orders. Do not enforce
+  a reference algorithm through exact trace sequences or byte counts without a task-level reason.
+- Preserve student solutions when revising a notebook.
+- Use `BACKLOG.md` for concrete future features and course additions, not review reminders,
+  editing plans, discussion agendas, or the user's next steps. Discuss success rewards before adding them.
+
+## Puzzle narrative
+
+- Assume Python fluency and a learner new to distributed programming. Spend words
+  on communication, ordering, ownership, and completion; skip ordinary Python walkthroughs.
+- Build around a concrete goal: what each rank knows initially and what the program
+  must accomplish. Lesson introductions establish context and motivation, not a task inventory.
+- Choose examples and their order before polishing prose. Reuse familiar values,
+  roles, and operations while changing one important constraint at a time.
+- When the narrative feels ambiguous, thin, or disjointed, check for a missing
+  learning step. Proactively suggest a lesson or intermediate puzzle when it would
+  close that gap. Name the gap, where the addition belongs, and what it would teach.
+  Suggest the smallest useful addition; create it only when the user asks.
+- Introduce a concept or API when an example makes its purpose visible. Supply the
+  API knowledge needed for a puzzle before asking students to reason with it.
+- Make explanations grow out of what the reader has just seen: an unmet goal,
+  a consequence, or a useful change to the example. Give new topics a clear reason
+  to appear. Keep transitions natural and conversational; avoid abrupt definitions
+  and disconnected asides, without padding the text with empty signposting.
+- Explain concrete consequences: which rank waits, which can proceed, what information
+  is missing, and how completion is recognized. For a likely misconception, a small
+  failing program and its execution state can show where the expectation breaks.
+- Use small examples with visible results, traces, or something specific to predict.
+  Make the code demonstrate the point; avoid paraphrasing it both before and after.
+- Match the structure to the lesson. A new primitive may need a motivating problem;
+  an extension may need only one changed constraint; a synthesis puzzle may need only
+  roles and a contract. Do not force every lesson through the same narrative template.
+- Keep the desired result, inputs, outputs, edge cases, and essential communication
+  constraints easy to find. For a dense task, put a revealing example before detailed
+  rules and group those rules by purpose.
+- Separate teaching the tools from solving the puzzle. An introduction can work through
+  an exchange; an exercise should leave its intended protocol, ordering, or termination
+  decisions to the learner. Keep hints short and optional.
+- Use a plain, slightly informal voice and consistent vocabulary. Themes should clarify
+  roles without adding translation work or unrelated rules. Explain useful reasons for
+  choices; let occasional humor or reassurance respond to a specific situation.
+- Edit each sentence by asking what difficulty, expectation, or change it helps the
+  reader understand. Cut empty transitions, staged jokes, and redundant recaps. Allow
+  examples to end without commentary, and vary pacing with the difficulty of the material.
 
 ## Tooling
 
@@ -61,7 +111,7 @@ something is done, a non-obvious trade-off, or a subtle constraint.
 
 ## Design principles
 
-- Payloads are real CPU `torch.Tensor` values with autograd where puzzles need it.
+- Tensor lessons use real CPU `torch.Tensor` values with autograd where needed; P2P lessons can use Python values.
 - Tensor collectives wrap flock's value-typed collectives with shape/dtype-aware
   semantics (concatenate on gather, elementwise reduce, etc.).
 - High-level parallel APIs (`DeviceMesh`, `DTensor`, `redistribute`) are student

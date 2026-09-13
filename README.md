@@ -24,6 +24,13 @@ async def sum_ranks():
 check(sum_ranks(), [torch.tensor([6.0])] * 4)
 ```
 
+## Start here
+
+1. [Introduction](puzzles/00_intro.ipynb) — course goals, Flock, and communication basics.
+2. [Messages between ranks](puzzles/01_p2p.ipynb) — five P2P puzzles.
+
+Public reference solutions are available in [solutions/](solutions/README.md).
+
 ## flock vs dist-puzzles
 
 | | flock | dist-puzzles |
