@@ -11,3 +11,13 @@ wheels/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+assets/
+
+# Local source assets and diagram builders
+.assets-source/
+
+BACKLOG.md

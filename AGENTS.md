@@ -20,10 +20,9 @@ something is done, a non-obvious trade-off, or a subtle constraint.
 
 ## Project structure
 
-- `puzzles/` — notebooks and exercise specs; this is the main project surface
-  for now.
-- `solutions/` — public reference notebooks, named to match their puzzle notebooks.
-  Keep implementations and checker calls here; avoid duplicating full exercise descriptions.
+- `puzzles/` — lesson notebooks, exercise specs, implementations, examples, and
+  checker calls. Keep everything together here while the course is being refactored.
+  Do not recreate separate solution notebooks until the user asks.
 - `src/dist_puzzles/` — tiny shared notebook helpers: `check`, `check_comm`,
   and `comm_report`.
 - `pyproject.toml` — dependency, package, and tool configuration.
@@ -48,6 +47,8 @@ something is done, a non-obvious trade-off, or a subtle constraint.
   Accept different valid protocols, message formats, and operation orders. Do not enforce
   a reference algorithm through exact trace sequences or byte counts without a task-level reason.
 - Preserve student solutions when revising a notebook.
+- Keep descriptions, implementations, runnable examples, checker calls, and
+  visualizations consistent within each puzzle notebook.
 - Use `BACKLOG.md` for concrete future features and course additions, not review reminders,
   editing plans, discussion agendas, or the user's next steps. Discuss success rewards before adding them.
 
