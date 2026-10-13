@@ -1,7 +1,3 @@
-import json
-from functools import cache
-from importlib.resources import files
-
 from flock import CommunicationLayout, Tracer
 
 
@@ -11,21 +7,9 @@ def show_trace(trace: Tracer) -> None:
     display(SVG(_draw_trace(trace.communication_layout())))
 
 
-@cache
-def _glyphs():
-    return json.loads(files("dist_puzzles").joinpath("trace_labels.json").read_text())
-
-
 def _label(value: str, x: float, y: float, *, centered: bool = False) -> str:
-    glyphs = _glyphs()
-    if centered:
-        x -= sum(glyphs[char]["width"] for char in value) / 2
-    parts = [f'<g fill="#555" aria-label="{value}">']
-    for char in value:
-        glyph = glyphs[char]
-        parts.append(f'<path d="{glyph["path"]}" transform="translate({x} {y})"/>')
-        x += glyph["width"]
-    return "".join(parts) + "</g>"
+    anchor = "middle" if centered else "start"
+    return f'<text x="{x}" y="{y}" fill="#555" text-anchor="{anchor}">{value}</text>'
 
 
 def _draw_trace(layout: CommunicationLayout) -> str:
